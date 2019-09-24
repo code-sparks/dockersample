@@ -83,11 +83,6 @@ ls -l
 # Verify the new desired state of 10 replicas is stored in the Swarm
 	docker service inspect voter_vote --pretty
 
-
-###############################
-# To complete the section below you will need to be using a multi-node Swarm 
-###############################	
-
 # Verify that at least one replica of the voter_vote service is running on each node in the Swarm
 	docker service ps voter_vote
 
