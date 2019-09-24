@@ -62,7 +62,7 @@ ls -l
 # See if the new desired state of 20 replicas of the voter_vote service is recorded in the stack file (stackfile.yml). It will not be.
 	vim stackfile.yml
 	
-#Alter the desired state in the stack file (Stackfile.yml) to be 10 replicas for the voter_vote service  To do this, change the "replicas" property to "10" as shown in the last line of config file below and then save the file
+# Alter the desired state in the stack file (Stackfile.yml) to be 10 replicas for the voter_vote service  To do this, change the "replicas" property to "10" as shown in the last line of config file below and then save the file
 	  vote:
 		image: dockersamples/examplevotingapp_vote:before
 		ports:
