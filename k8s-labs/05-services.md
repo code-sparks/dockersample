@@ -68,6 +68,7 @@ spec:
   - port: 80
     protocol: TCP
     targetPort: 80
+    nodePort: 30685
   selector:
     run: nginx
   sessionAffinity: None
