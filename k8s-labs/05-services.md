@@ -85,11 +85,11 @@ kubectl get svc
 # result:
 NAME         TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
 kubernetes   ClusterIP   10.96.0.1        <none>        443/TCP        1d
-nginx        NodePort    10.107.253.138   <none>        80:31931/TCP   3m
+nginx        NodePort    10.107.253.138   <none>        80:30685/TCP   3m
 ```
 
 ```bash
-wget -O- NODE_IP:31931 # if you're using Kubernetes with Docker for Windows/Mac, try 127.0.0.1
+wget -O- NODE_IP:30685 # if you're using Kubernetes with Docker for Windows/Mac, try 127.0.0.1
 #if you're using minikube, try minikube ip, then get the node ip such as 192.168.99.117
 ```
 
