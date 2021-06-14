@@ -163,7 +163,7 @@ kubectl apply -f deploy.yaml
 or, do something like:
 
 ```bash
-kubectl create deployment nginx4 --image=nginx:1.7.8 --replicas=2 --port=80
+kubectl create deployment nginx --image=nginx:1.7.8 --replicas=2 --port=80
 ```
 
 </p>
