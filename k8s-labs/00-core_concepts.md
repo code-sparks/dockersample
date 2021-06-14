@@ -213,17 +213,6 @@ exit
 </p>
 </details>
 
-### Get this pod's YAML without cluster specific information
-
-<details><summary>show</summary>
-<p>
-
-```bash
-kubectl get po nginx -o yaml --export
-```
-
-</p>
-</details>
 
 ### Get information about the pod, including details about potential issues (e.g. pod hasn't started)
 
