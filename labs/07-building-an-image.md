@@ -26,7 +26,7 @@ Here's a quick summary of some basic commands we will use in our Dockerfile.
 * `CMD` defines the commands that will run on the image at start-up. Unlike a `RUN`, this does not create a new layer for the image, but simply runs the command. There can only be one `CMD` in a Dockerfile. If you need to run multiple commands, the best way to do that is to have the `CMD` run a script. `CMD` requires that you tell it where to run the command, unlike `RUN`. So example `CMD` commands would be:
 
 ```docker
-  CMD ["python", "./app.py"]
+  CMD ["python3", "./app.py"]
 
   CMD ["/bin/bash", "echo", "Hello World"]
 ```
@@ -64,7 +64,7 @@ We'll start by specifying our base image, using the `FROM` keyword:
 
   ```docker
   RUN apt-get update -y
-  RUN apt-get install -y python-pip python-dev build-essential
+  RUN apt-get install -y python3-pip python3-dev build-essential
   ```
 
 
@@ -94,7 +94,7 @@ We'll start by specifying our base image, using the `FROM` keyword:
 5. The last step is the command for running the application which is simply - `python ./app.py`. Use the [CMD](https://docs.docker.com/engine/reference/builder/#cmd) command to do that:
 
   ```docker
-  CMD ["python", "/usr/src/app/app.py"]
+  CMD ["python3", "/usr/src/app/app.py"]
   ```
 
   The primary purpose of `CMD` is to tell the container which command it should run by default when it is started.
@@ -109,7 +109,7 @@ We'll start by specifying our base image, using the `FROM` keyword:
 
   # Install python and pip
   RUN apt-get update -y
-  RUN apt-get install -y python-pip python-dev build-essential
+  RUN apt-get install -y python3-pip python3-dev build-essential
 
   # Install Python modules needed by the Python app
   COPY requirements.txt /usr/src/app/
@@ -122,7 +122,7 @@ We'll start by specifying our base image, using the `FROM` keyword:
   EXPOSE 5000
 
   # Run the application
-  CMD ["python", "/usr/src/app/app.py"]
+  CMD ["python3", "/usr/src/app/app.py"]
   ```
 
 ### Build the image
@@ -157,7 +157,7 @@ Fetched 24.0 MB in 6s (3911 kB/s)
 Reading package lists...
  ---> 07205bd484c9
 Removing intermediate container 42d5752a0faf
-Step 3/8 : RUN apt-get install -y python-pip python-dev build-essential
+Step 3/8 : RUN apt-get install -y python3-pip python3-dev build-essential
  ---> Running in 43e6e25b8c6b
 Reading package lists...
 Building dependency tree...
@@ -270,12 +270,12 @@ Consider the following Dockerfile:
 ```bash
   FROM ubuntu:latest
   RUN apt-get update -y
-  RUN apt-get install -y python-pip python-dev build-essential
+  RUN apt-get install -y python3-pip python3-dev build-essential
   COPY requirements.txt /usr/src/app/
   RUN pip install --no-cache-dir -r /usr/src/app/requirements.txt
   COPY app.py /usr/src/app/
   EXPOSE 5000
-  CMD ["python", "/usr/src/app/app.py"]
+  CMD ["python3", "/usr/src/app/app.py"]
 ```
 
 First, we choose a starting image: `ubuntu:latest`, which in turn has many layers.
