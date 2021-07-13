@@ -155,8 +155,13 @@ kubectl create deployment nginx  --image=nginx:1.7.8  --dry-run -o yaml > deploy
 vi deploy.yaml
 # change the replicas field from 1 to 2
 # add this section to the container spec and save the deploy.yaml file
-# ports:
-#   - containerPort: 80
+      containers:
+      - image: nginx:1.7.8
+        name: nginx
+        ports:
+        - containerPort: 80
+
+
 kubectl apply -f deploy.yaml
 ```
 
