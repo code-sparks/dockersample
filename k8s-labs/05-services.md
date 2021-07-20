@@ -103,7 +103,7 @@ wget -O- NODE_IP:30685 # if you're using Kubernetes with Docker for Windows/Mac,
 
 
 ```bash
-kubectl create deployment foo --image=dgkanatsios/simpleapp --dry-run -o yaml 
+kubectl create deployment foo --image=dgkanatsios/simpleapp  
 kubectl scale deployment foo --replicas=3
 kubectl label deployment foo --overwrite app=foo
 kubectl patch deployment foo -p \
