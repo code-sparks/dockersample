@@ -29,6 +29,7 @@ You want to containerize it. That's easy!
 FROM golang:alpine
 WORKDIR /app
 ADD . /app
+RUN go mod init github.com/motiso/myapp
 RUN cd /app && go build -o goapp
 ENTRYPOINT ./goapp
 ```
@@ -50,6 +51,7 @@ See the following `Dockerfile`, it has two `build stages`,
 # build stage
 FROM golang:alpine AS builder
 ADD . /src/
+RUN go mod init github.com/motiso/myapp
 RUN cd /src && go build -o goapp
 
 # final stage
