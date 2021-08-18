@@ -59,13 +59,13 @@ status: {}
 ```
 
 ```bash
-kubectl create -f pod.yaml -n mynamespace
+kubectl create -f pod.yaml 
 ```
 
 Alternatively, you can run in one line
 
 ```bash
-kubectl run nginx --image=nginx --restart=Never --dry-run -o yaml | kubectl create -n mynamespace -f -
+kubectl run nginx --image=nginx --restart=Never --dry-run -o yaml | kubectl create  -f -
 ```
 
 </p>
