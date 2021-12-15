@@ -50,15 +50,17 @@ See the following `Dockerfile`, it has two `build stages`,
 ```Dockerfile
 # build stage
 FROM golang:alpine AS builder
-ADD . /src/
+WORKDIR /app
+ADD . /app
 RUN go mod init github.com/motiso/myapp
-RUN cd /src && go build -o goapp
+RUN cd /app && go build -o goapp
 
 # final stage
 FROM alpine
 WORKDIR /app
-COPY --from=builder /src/goapp /app/
+COPY --from=builder /app/goapp /app/
 ENTRYPOINT ./goapp
+
 ```
 
 Try building it with a different tag and running it.
