@@ -1,0 +1,52 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: "codesparks/examples-movies-watchlist-frontend:1.0"
+          imagePullPolicy: Always
+          ports:
+            - name: frontend
+              containerPort: 3000
+          env:
+            - name: MYSQL_SERVICE_HOST
+              value: mysql-service
+            - name: BACKEND_SERVICE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: frontend-config
+                  key: BACKEND_SERVICE_URI
+            - name: MOVIES_SERVICE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: frontend-config
+                  key: MOVIES_SERVICE_URI         
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  labels:
+    app: frontend
+spec:
+  type: NodePort
+  ports:
+    - port: 3000
+      targetPort: 3000
+      nodePort: 30685
+      protocol: TCP
+  selector:
+    app: frontend
+

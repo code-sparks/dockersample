@@ -1,0 +1,55 @@
+---
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: users
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: users
+      template:
+        metadata:
+          labels:
+            app: users
+        spec:
+          containers:
+            - name: users
+              image: "codesparks/examples-movies-watchlist-users:1.0"
+              imagePullPolicy: Always
+              ports:
+                - name: users
+                  containerPort: 8080
+              env:
+                - name: MYSQL_DATABASE
+                  value: users_db
+                - name: MYSQL_SERVICE_HOST
+                  value: mysql-service
+                - name: MYSQL_USERNAME
+                  valueFrom:
+                    secretKeyRef:
+                      name: mysql-auth
+                      key: username
+                - name: MYSQL_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: mysql-auth
+                      key: password         
+---
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: users-service
+      labels:
+        app: users
+    spec:
+      type: NodePort
+      ports:
+        - port: 8080
+          targetPort: 8080
+          nodePort: 30687
+          protocol: TCP
+      selector:
+        app: users
+    
+    

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+data:
+  BACKEND_SERVICE_URI: "http://localhost:30687/"
+  MOVIES_SERVICE_URI: "http://localhost:30686/"
+
