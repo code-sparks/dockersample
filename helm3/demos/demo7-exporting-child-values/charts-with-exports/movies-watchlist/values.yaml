@@ -1,0 +1,34 @@
+
+dbData:
+  username: username
+  password: password
+  databaseChart: database
+
+frontend:
+  ingress: 
+    enabled: false
+
+users:
+  ingress: 
+    enabled: false
+
+movies:
+  ingress: 
+    enabled: false
+
+ingress:
+  - host:
+      domain: localhost
+      paths:  
+        - path: "/"
+          chart: frontend
+          port: 3000
+        - path: "/movies"
+          chart: movies
+          port: 8088
+        - path: "/auth"
+          chart: users
+          port: 8080
+        - path: "/watchlist"
+          chart: users
+          port: 8080

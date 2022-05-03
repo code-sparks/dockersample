@@ -1,0 +1,27 @@
+apiVersion: v2
+name: movies-watchlist
+appVersion: "1.0"
+description: A Helm chart for Movie Watchlist 1.0
+version: 1.0.0
+type: application
+dependencies:
+- name: frontend
+  version: "1.0.0"
+  repository: frontend
+- name: users
+  import-values:
+    - child: secret
+      parent: dbData
+    - child: data
+      parent: dbData
+  version: "1.0.0"
+  repository: users
+- name: movies
+  version: "1.0.0"
+  repository: movies
+- name: database
+  import-values:
+    - child: secret
+      parent: dbData
+  version: "1.0.0"
+  repository: database

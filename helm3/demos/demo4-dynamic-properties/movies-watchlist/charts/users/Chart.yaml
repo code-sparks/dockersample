@@ -1,0 +1,6 @@
+apiVersion: v2
+name: users
+appVersion: "1.0"
+description: A users backend for the Movie Watchlist 1.0
+version: 1.0.0
+type: application

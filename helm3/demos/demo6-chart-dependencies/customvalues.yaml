@@ -1,0 +1,40 @@
+database:
+  secret:
+    username: moti
+    password: pass1234
+
+frontend:
+  ingress: 
+    enabled: false
+  config:
+   BACKEND_SERVICE_URI: "elb.amazonaws.com/"
+   MOVIES_SERVICE_URI: "elb.amazonaws.com/"
+
+users:
+  secret:
+    username: moti
+    password: pass1234
+    databaseChart: database
+  ingress: 
+    enabled: false
+
+movies:
+  ingress: 
+    enabled: false
+
+ingress:
+  - host:
+      domain: elb.amazonaws.com
+      paths:  
+        - path: "/"
+          chart: frontend
+          port: 3000
+        - path: "/movies"
+          chart: movies
+          port: 8088
+        - path: "/auth"
+          chart: users
+          port: 8080
+        - path: "/watchlist"
+          chart: users
+          port: 8080

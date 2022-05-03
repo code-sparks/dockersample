@@ -1,0 +1,9 @@
+config:
+    BACKEND_SERVICE_URI: "http://localhost/"
+    MOVIES_SERVICE_URI: "http://localhost/"
+image: 
+   name: "codesparks/examples-movies-watchlist-frontend"
+   tag: "1.0"
+service:
+   port: 80
+   nodePort: 30685

@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "database.fullname" .}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "database.fullname" .}}
+  template:
+    metadata:
+      labels:
+        app: {{ include "database.fullname" .}}
+    spec:
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: {{ include "database.fullname" .}}-pv-claim
+      containers:
+        - name: {{ include "database.fullname" .}}
+          image:  {{.Values.image.name}}:{{.Values.image.tag}}
+          imagePullPolicy: Always
+          args:
+            - "--ignore-db-dir=lost+found"
+          volumeMounts:
+          - name: mysql-persistent-storage
+            mountPath: /var/lib/mysql
+          ports:
+            - name: mysql
+              containerPort: 3306
+              protocol: TCP
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: password
+            - name: MYSQL_DATABASE
+              value: users_db
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "database.fullname" .}}-auth
+                  key: username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "database.fullname" .}}-auth
+                  key: password

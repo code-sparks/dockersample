@@ -1,0 +1,15 @@
+dependencies:
+- name: frontend
+  repository: http://localhost:8080
+  version: 1.0.0
+- name: users
+  repository: http://localhost:8080
+  version: 1.0.0
+- name: movies
+  repository: http://localhost:8080
+  version: 1.0.0
+- name: database
+  repository: http://localhost:8080
+  version: 1.0.0
+digest: sha256:8858697369b22d6e5a506faedd53a9d9857b3c60c5fba9fd84a996a20adabda1
+generated: "2022-04-30T18:25:53.043058+03:00"

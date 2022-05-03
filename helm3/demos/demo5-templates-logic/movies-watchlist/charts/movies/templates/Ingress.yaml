@@ -1,0 +1,19 @@
+{{- if .Values.ingress.enabled}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "movies.fullname" .}}-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: "/movies"
+        backend:
+          service:
+            name: {{ include "movies.fullname" .}}
+            port:
+              number: 8088
+{{- end}}

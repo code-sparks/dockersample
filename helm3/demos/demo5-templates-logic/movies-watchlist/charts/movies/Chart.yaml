@@ -1,0 +1,6 @@
+apiVersion: v2
+name: movies
+appVersion: "1.0"
+description: The Movie Service 1.0
+version: 1.0.0
+type: application

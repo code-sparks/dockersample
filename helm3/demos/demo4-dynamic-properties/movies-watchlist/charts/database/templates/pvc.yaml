@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{.Release.Name}}-{{.Chart.Name}}-pv-claim
+  labels:
+    app: {{.Release.Name}}-{{.Chart.Name}}-watch-list
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi

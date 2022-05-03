@@ -1,0 +1,26 @@
+{{- if .Values.ingress.enabled}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "users.fullname" .}}-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: "/auth"
+        backend:
+          service:
+            name: {{ include "users.fullname" .}}
+            port:
+              number: 8080
+      - pathType: Prefix
+        path: "/watchlist"
+        backend:
+          service:
+            name: {{ include "users.fullname" .}}
+            port:
+              number: 8080
+{{- end}}

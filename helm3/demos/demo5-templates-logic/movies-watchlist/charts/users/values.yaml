@@ -1,0 +1,7 @@
+image: 
+   name: "codesparks/examples-movies-watchlist-users"
+   tag: "1.0"
+secret:
+  username: username
+  password: password
+  databaseChart: database

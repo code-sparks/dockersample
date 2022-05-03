@@ -1,0 +1,6 @@
+apiVersion: v2
+name: moviessuggestion
+appVersion: "2.0"
+description: A Helm chart for Movie Suggestion 2.0
+version: 0.2.0
+type: application

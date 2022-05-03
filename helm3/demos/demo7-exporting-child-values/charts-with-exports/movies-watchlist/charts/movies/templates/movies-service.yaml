@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "movies.fullname" .}}
+  labels:
+    app: {{ include "movies.fullname" .}}
+spec:
+  ports:
+    - port: 8088
+      name: http
+  selector:
+    app: {{ include "movies.fullname" .}}
+
+  

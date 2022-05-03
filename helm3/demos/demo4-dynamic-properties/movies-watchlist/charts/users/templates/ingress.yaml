@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{.Release.Name}}-{{.Chart.Name}}-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: "/auth"
+        backend:
+          service:
+            name: {{.Release.Name}}-{{.Chart.Name}}
+            port:
+              number: 8080
+      - pathType: Prefix
+        path: "/watchlist"
+        backend:
+          service:
+            name: {{.Release.Name}}-{{.Chart.Name}}
+            port:
+              number: 8080

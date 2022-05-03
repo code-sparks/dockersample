@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Release.Name}}-{{.Chart.Name}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{.Release.Name}}-{{.Chart.Name}}
+  template:
+    metadata:
+      labels:
+        app: {{.Release.Name}}-{{.Chart.Name}}
+    spec:
+      containers:
+        - name: {{.Release.Name}}-{{.Chart.Name}}
+          image: {{.Values.image.name}}:{{.Values.image.tag}}
+          imagePullPolicy: Always
+          ports:
+            - name: frontend
+              containerPort: 3000
+          env:
+            - name: MYSQL_SERVICE_HOST
+              value: mysql-service
+            - name: BACKEND_SERVICE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{.Release.Name}}-{{.Chart.Name}}-config
+                  key: BACKEND_SERVICE_URI
+            - name: MOVIES_SERVICE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{.Release.Name}}-{{.Chart.Name}}-config
+                  key: MOVIES_SERVICE_URI         
+
+

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "movies.fullname" .}}
+  labels:
+    app: {{ include "movies.fullname" .}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "movies.fullname" .}}
+  template:
+    metadata:
+      labels:
+        app: {{ include "movies.fullname" .}}
+    spec:
+      containers:
+        - name: {{ include "movies.fullname" .}}
+          image: {{.Values.image.name}}:{{.Values.image.tag}}
+          env:
+            - name: ACTORS_HOSTNAME
+              value: "actors:8082"
+          livenessProbe:
+            initialDelaySeconds: 60
+            httpGet:
+              path: /actuator/health
+              port: 8088
+          readinessProbe:
+            httpGet:
+              path: /movies/ready
+              port: 8088
+
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8088

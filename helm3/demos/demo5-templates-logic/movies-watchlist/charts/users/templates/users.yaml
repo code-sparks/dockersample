@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "users.fullname" .}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "users.fullname" .}}
+  template:
+    metadata:
+      labels:
+        app: {{ include "users.fullname" .}}
+    spec:
+      containers:
+        - name: {{ include "users.fullname" .}}
+          image: {{.Values.image.name}}:{{.Values.image.tag}}
+          imagePullPolicy: Always
+          ports:
+            - name: users
+              containerPort: 8080
+          env:
+            - name: MYSQL_DATABASE
+              value: users_db
+            - name: MYSQL_SERVICE_HOST
+              valueFrom:
+                  secretKeyRef:
+                    name: {{ include "users.fullname" .}}-auth
+                    key: sqlhost
+            - name: MYSQL_USERNAME
+              valueFrom:
+                  secretKeyRef:
+                    name: {{ include "users.fullname" .}}-auth
+                    key: username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                  secretKeyRef:
+                    name: {{ include "users.fullname" .}}-auth
+                    key: password         
