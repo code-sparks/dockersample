@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: moviesuggestion-ui
+  labels:
+    app: moviesuggestion-ui
+    service: moviesuggestion-ui
+spec:
+  ports:
+    - port: 8080
+      name: http
+  type: NodePort
+  selector:
+    app: moviesuggestion-ui

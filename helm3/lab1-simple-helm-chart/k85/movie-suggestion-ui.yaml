@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: moviesuggestion-ui
+  labels:
+    app: moviesuggestion-ui
+    version: v1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: moviesuggestion-ui
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: moviesuggestion-ui
+        version: v1
+    spec:
+      containers:
+        - name: moviesuggestion-ui
+          image: codesparks/examples-moviesuggestion-ui-v1:2.2
+          env:
+            - name: MOVIES_HOSTNAME
+              value: "movies:8081"
+          livenessProbe:
+            initialDelaySeconds: 60
+            httpGet:
+              path: /actuator/health
+              port: 8080
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8080
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080

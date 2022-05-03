@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Release.Name}}-{{.Chart.Name}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{.Release.Name}}-{{.Chart.Name}}
+  template:
+    metadata:
+      labels:
+        app: {{.Release.Name}}-{{.Chart.Name}}
+    spec:
+      containers:
+        - name: {{.Release.Name}}-{{.Chart.Name}}
+          image: {{.Values.image.name}}:{{.Values.image.tag}}
+          imagePullPolicy: Always
+          ports:
+            - name: users
+              containerPort: 8080
+          env:
+            - name: MYSQL_DATABASE
+              value: users_db
+            - name: MYSQL_SERVICE_HOST
+              value: mysql-service #{{.Release.Name}}-{{.Chart.Name}}
+            - name: MYSQL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{.Release.Name}}-{{.Chart.Name}}-auth
+                  key: username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{.Release.Name}}-{{.Chart.Name}}-auth
+                  key: password         

@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Release.Name}}-{{.Chart.Name}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{.Release.Name}}-{{.Chart.Name}}
+  template:
+    metadata:
+      labels:
+        app: {{.Release.Name}}-{{.Chart.Name}}
+    spec:
+      volumes:
+      - name: mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: {{.Release.Name}}-{{.Chart.Name}}-pv-claim
+      containers:
+        - name: {{.Release.Name}}-{{.Chart.Name}}
+          image:  {{.Values.image.name}}:{{.Values.image.tag}}
+          imagePullPolicy: Always
+          args:
+            - "--ignore-db-dir=lost+found"
+          volumeMounts:
+          - name: mysql-persistent-storage
+            mountPath: /var/lib/mysql
+          ports:
+            - name: mysql
+              containerPort: 3306
+              protocol: TCP
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: password
+            - name: MYSQL_DATABASE
+              value: users_db
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{.Release.Name}}-{{.Chart.Name}}-auth
+                  key: username
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{.Release.Name}}-{{.Chart.Name}}-auth
+                  key: password
